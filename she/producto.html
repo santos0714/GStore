@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producto | GStore</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        body {
+            background: #fff;
+            color: #000;
+        }
+
+        /* ── Breadcrumb ── */
+        .breadcrumb {
+            padding: 18px 50px;
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: #aaa;
+            background: #fff;
+            border-bottom: 1px solid #efefef;
+        }
+
+        .breadcrumb a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb a:hover { color: #000; }
+        .breadcrumb span { color: #000; }
+
+        /* ── Layout producto ── */
+        .product-page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 50px 100px;
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 70px;
+            align-items: start;
+        }
+
+        /* ── Galería ── */
+        .product-gallery {
+            position: sticky;
+            top: 110px;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 700px;
+            object-fit: cover;
+            display: block;
+            background: #f2f2f2;
+            transition: opacity 0.2s;
+        }
+
+        .thumbs {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .thumbs img {
+            flex: 1;
+            height: 110px;
+            object-fit: cover;
+            cursor: pointer;
+            opacity: 0.55;
+            border: 2px solid transparent;
+            transition: opacity 0.2s, border-color 0.2s;
+        }
+
+        .thumbs img:hover,
+        .thumbs img.active {
+            opacity: 1;
+            border-color: #000;
+        }
+
+        /* ── Info producto ── */
+        .product-info {
+            padding-top: 8px;
+        }
+
+        .product-brand {
+            font-size: 10px;
+            letter-spacing: 5px;
+            color: #aaa;
+            display: block;
+            margin-bottom: 14px;
+        }
+
+        .product-info h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .product-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 28px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid #efefef;
+        }
+
+        .product-meta p {
+            font-size: 13px;
+            color: #555;
+            letter-spacing: 1px;
+        }
+
+        .product-meta strong {
+            color: #000;
+        }
+
+        .product-price {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #000;
+            margin-bottom: 32px;
+        }
+
+        /* ── Botones de acción ── */
+        .product-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-cart {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: #000;
+            color: #fff;
+            border: none;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .btn-cart:hover { background: #222; }
+
+        .btn-dm {
+            display: block;
+            width: 100%;
+            padding: 17px;
+            background: transparent;
+            color: #000;
+            border: 1px solid #000;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-decoration: none;
+            text-align: center;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .btn-dm:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        /* ── Detalles acordeón ── */
+        .product-details {
+            margin-top: 40px;
+            border-top: 1px solid #efefef;
+        }
+
+        .detail-row {
+            border-bottom: 1px solid #efefef;
+            padding: 16px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .detail-row span {
+            font-size: 10px;
+            letter-spacing: 3px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .detail-row .arrow {
+            font-size: 12px;
+            color: #aaa;
+            transition: transform 0.2s;
+        }
+
+        .detail-content {
+            display: none;
+            padding: 0 0 18px;
+            font-size: 12px;
+            color: #666;
+            line-height: 1.8;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-row.open + .detail-content { display: block; }
+        .detail-row.open .arrow { transform: rotate(45deg); }
+
+        /* ── Toast ── */
+        .toast {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background: #000;
+            color: #fff;
+            padding: 16px 28px;
+            font-size: 11px;
+            letter-spacing: 3px;
+            font-weight: 700;
+            z-index: 999;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Footer ── */
+        .footer {
+            background: #050505;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            padding: 60px 50px 40px;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-brand p {
+            font-size: 12px;
+            color: rgba(255,255,255,0.35);
+            line-height: 1.8;
+            margin-top: 16px;
+            max-width: 220px;
+        }
+
+        .footer-brand .footer-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            letter-spacing: 5px;
+            color: #fff;
+        }
+
+        .footer-col h4 {
+            font-size: 9px;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .footer-col a {
+            display: block;
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover { color: #fff; }
+
+        .footer-bottom {
+            background: #050505;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            font-size: 10px;
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 2px;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .product-page {
+                grid-template-columns: 1fr;
+                padding: 30px 20px 70px;
+                gap: 36px;
+            }
+
+            .product-gallery { position: static; }
+
+            .main-image { height: 480px; }
+
+            .product-info h1 { font-size: 26px; }
+
+            .breadcrumb { padding: 14px 20px; }
+
+            .footer {
+                grid-template-columns: 1fr 1fr;
+                padding: 50px 24px 30px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 8px;
+                padding: 20px 24px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .footer { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="top-bar">
+        ENVÍOS A TODO MÉXICO &nbsp;·&nbsp; NUEVO DROP DISPONIBLE
+    </div>
+
+    <header class="navbar">
+        <nav class="nav-left">
+            <a href="../index.html">HOME</a>
+            <a href="#">MENS</a>
+            <a href="she.html">SHE</a>
+            <a href="#">ACCESSORIES</a>
+            <a href="#">STORY</a>
+        </nav>
+
+        <a href="../index.html" class="logo">
+            <img src="../images/logo.png" alt="GStore Logo">
+        </a>
+
+        <div class="nav-right">
+            <a href="../carrito.html" class="nav-cta">CARRITO (<span id="navCartCount">0</span>)</a>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <a href="../index.html">HOME</a> &nbsp;/&nbsp;
+        <a href="she.html">SHE</a> &nbsp;/&nbsp;
+        <span id="breadcrumbNombre">—</span>
+    </nav>
+
+    <!-- Contenido del producto -->
+    <div id="producto"></div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">✓ &nbsp;AGREGADO AL CARRITO</div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer">
+            <div class="footer-brand">
+                <div class="footer-logo">GSTORE</div>
+                <p>Performance wear diseñado para quien entrena con intención y se mueve con presencia.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>COLECCIONES</h4>
+                <a href="she.html">SHE</a>
+                <a href="#">MENS — SOON</a>
+                <a href="#">ACCESSORIES — SOON</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>INFO</h4>
+                <a href="#">Guía de tallas</a>
+                <a href="#">Envíos y devoluciones</a>
+                <a href="#">Preguntas frecuentes</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>SÍGUENOS</h4>
+                <a href="https://instagram.com/gstorens" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://wa.me/521XXXXXXXXXX" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025 GSTORE — TODOS LOS DERECHOS RESERVADOS</p>
+            <p>BUILT FOR DISCIPLINE</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+    <script>
+        /* ── Contador carrito ── */
+        function actualizarContador() {
+            const count = (JSON.parse(localStorage.getItem("cart")) || []).length;
+            document.getElementById("navCartCount").textContent = count;
+        }
+        actualizarContador();
+
+        /* ── Toast ── */
+        function mostrarToast() {
+            const toast = document.getElementById("toast");
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 2200);
+        }
+
+        /* ── Cambiar imagen principal ── */
+        function cambiarImagen(src, thumbEl) {
+            document.getElementById("mainProductImage").src = src;
+            document.querySelectorAll(".thumbs img").forEach(t => t.classList.remove("active"));
+            thumbEl.classList.add("active");
+        }
+
+        /* ── Acordeón ── */
+        document.addEventListener("click", function(e) {
+            const row = e.target.closest(".detail-row");
+            if (!row) return;
+            row.classList.toggle("open");
+        });
+
+        /* ── Cargar producto ── */
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+
+        async function cargarProducto() {
+            const response = await fetch("InventarioShe.xlsx");
+            const arrayBuffer = await response.arrayBuffer();
+            const workbook = XLSX.read(arrayBuffer, { type: "array" });
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+            const productos = XLSX.utils.sheet_to_json(sheet);
+
+            const producto = productos.find(p => String(p["#Número"]) === String(id));
+
+            if (!producto) {
+                document.getElementById("producto").innerHTML =
+                    `<p style="text-align:center;padding:80px;color:#aaa;letter-spacing:3px;font-size:12px;">
+                        PRODUCTO NO ENCONTRADO
+                    </p>`;
+                return;
+            }
+
+            const numero = producto["#Número"];
+            const nombre = producto["Nombre"] || "";
+            const marca  = producto["Marca"]  || "";
+            const color  = producto["Color"]  || "";
+            const talla  = producto["Talla"]  || "";
+            const precio = producto["Precio"] || "";
+
+            document.title = `${nombre} | GStore`;
+            document.getElementById("breadcrumbNombre").textContent = nombre;
+
+            const img1 = `../images/she/${numero}.1.png`;
+            const img2 = `../images/she/${numero}.2.png`;
+            const img3 = `../images/she/${numero}.3.png`;
+
+            const mensajeDM = encodeURIComponent(
+                `Hola, quiero comprar:\n\nProducto: ${nombre}\nMarca: ${marca}\nColor: ${color}\nTalla: ${talla}\nPrecio: $${precio} MXN`
+            );
+
+            document.getElementById("producto").innerHTML = `
+                <div class="product-page">
+
+                    <div class="product-gallery">
+                        <img id="mainProductImage" src="${img1}" alt="${nombre}" class="main-image">
+                        <div class="thumbs">
+                            <img src="${img1}" class="active" onclick="cambiarImagen(this.src, this)" alt="${nombre} 1">
+                            <img src="${img2}" onclick="cambiarImagen(this.src, this)" alt="${nombre} 2">
+                            <img src="${img3}" onclick="cambiarImagen(this.src, this)" alt="${nombre} 3">
+                        </div>
+                    </div>
+
+                    <div class="product-info">
+                        <span class="product-brand">${marca}</span>
+                        <h1>${nombre}</h1>
+
+                        <div class="product-meta">
+                            <p><strong>Color</strong> &nbsp;·&nbsp; ${color}</p>
+                            <p><strong>Talla</strong> &nbsp;·&nbsp; ${talla}</p>
+                        </div>
+
+                        <p class="product-price">$${precio} <span style="font-size:14px;font-weight:400;color:#888;letter-spacing:2px;">MXN</span></p>
+
+                        <div class="product-actions">
+                            <button class="btn-cart" id="btnAgregarCarrito">
+                                AGREGAR AL CARRITO
+                            </button>
+                            <a href="https://ig.me/m/gstorens?text=${mensajeDM}" target="_blank" rel="noopener" class="btn-dm">
+                                PEDIR POR INSTAGRAM
+                            </a>
+                        </div>
+
+                        <div class="product-details">
+                            <div class="detail-row">
+                                <span>DETALLES DEL PRODUCTO</span>
+                                <span class="arrow">+</span>
+                            </div>
+                            <div class="detail-content">
+                                Prenda de activewear de alta calidad. Diseñada para rendimiento y comodidad durante el entrenamiento. Material transpirable y de secado rápido.
+                            </div>
+
+                            <div class="detail-row">
+                                <span>ENVÍOS Y DEVOLUCIONES</span>
+                                <span class="arrow">+</span>
+                            </div>
+                            <div class="detail-content">
+                                Envíos a todo México en 3–7 días hábiles. Para cambios o devoluciones contáctanos por WhatsApp o Instagram dentro de los primeros 7 días.
+                            </div>
+
+                            <div class="detail-row">
+                                <span>GUÍA DE TALLAS</span>
+                                <span class="arrow">+</span>
+                            </div>
+                            <div class="detail-content">
+                                XS · XS/S · S · M · L · XL. Si tienes dudas sobre tu talla, escríbenos y con gusto te orientamos antes de tu compra.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            `;
+
+            /* Agregar al carrito */
+            document.getElementById("btnAgregarCarrito").addEventListener("click", function() {
+                const product = { id: String(numero), name: nombre, price: String(precio),
+                                  color, size: talla, brand: marca, image: img1 };
+                const cart = JSON.parse(localStorage.getItem("cart")) || [];
+                cart.push(product);
+                localStorage.setItem("cart", JSON.stringify(cart));
+                actualizarContador();
+                mostrarToast();
+            });
+        }
+
+        cargarProducto();
+    </script>
+
+</body>
+</html>

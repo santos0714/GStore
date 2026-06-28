@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GStore | Built for Discipline</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── Marquee banner ── */
+    .marquee-banner {
+      background: #fff;
+      color: #000;
+      overflow: hidden;
+      padding: 14px 0;
+      border-top: 1px solid #e8e8e8;
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      animation: marquee 22s linear infinite;
+      white-space: nowrap;
+    }
+
+    .marquee-track span {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 5px;
+      padding: 0 50px;
+      color: #000;
+    }
+
+    .marquee-track .dot {
+      color: #aaa;
+      padding: 0;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── Brand statement ── */
+    .brand-statement {
+      background: #050505;
+      padding: 90px 50px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .brand-statement blockquote {
+      font-family: 'Cinzel', serif;
+      font-size: 28px;
+      font-weight: 400;
+      letter-spacing: 4px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.6;
+      max-width: 700px;
+      margin: 0 auto 24px;
+    }
+
+    .brand-statement cite {
+      font-size: 10px;
+      letter-spacing: 5px;
+      color: rgba(255,255,255,0.3);
+      font-style: normal;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      background: #050505;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 60px 50px 40px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+
+    .footer-brand p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.8;
+      margin-top: 16px;
+      max-width: 220px;
+    }
+
+    .footer-brand .footer-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      letter-spacing: 5px;
+      color: #fff;
+    }
+
+    .footer-col h4 {
+      font-size: 9px;
+      letter-spacing: 4px;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .footer-col a {
+      display: block;
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover {
+      color: #fff;
+    }
+
+    .footer-bottom {
+      background: #050505;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 20px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-bottom p {
+      font-size: 10px;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 2px;
+    }
+
+    @media (max-width: 900px) {
+      .footer {
+        grid-template-columns: 1fr 1fr;
+        padding: 50px 24px 30px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 8px;
+        padding: 20px 24px;
+        text-align: center;
+      }
+
+      .brand-statement blockquote {
+        font-size: 20px;
+      }
+
+      .brand-statement {
+        padding: 70px 28px;
+      }
+    }
+
+    @media (max-width: 550px) {
+      .footer {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="top-bar">
+    ENVÍOS A TODO MÉXICO &nbsp;·&nbsp; NUEVO DROP DISPONIBLE
+  </div>
+
+  <header class="navbar">
+    <nav class="nav-left">
+      <a href="index.html">HOME</a>
+      <a href="#">MENS</a>
+      <a href="she/she.html">SHE</a>
+      <a href="#">ACCESSORIES</a>
+      <a href="#">STORY</a>
+    </nav>
+
+    <a href="index.html" class="logo">
+      <img src="images/logo.png" alt="GStore Logo">
+    </a>
+
+    <div class="nav-right">
+      <a href="she/she.html" class="nav-cta">SHOP SHE</a>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="hero-content">
+        <span class="hero-tag">GSTORE ACTIVEWEAR</span>
+        <h1>BUILT FOR<br>DISCIPLINE</h1>
+        <p>Performance wear para entrenar fuerte,<br>verte limpio y moverte con presencia.</p>
+        <div class="buttons">
+          <a href="she/she.html" class="btn btn-white">SHOP SHE</a>
+          <a href="#" class="btn btn-outline">MENS SOON</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Marquee animado -->
+    <div class="marquee-banner" aria-hidden="true">
+      <div class="marquee-track">
+        <span>MINIMAL</span><span class="dot">—</span>
+        <span>STRONG</span><span class="dot">—</span>
+        <span>ELEGANT</span><span class="dot">—</span>
+        <span>PERFORMANCE</span><span class="dot">—</span>
+        <span>NUEVO DROP</span><span class="dot">—</span>
+        <span>ENVÍOS A TODO MÉXICO</span><span class="dot">—</span>
+        <!-- duplicado para loop continuo -->
+        <span>MINIMAL</span><span class="dot">—</span>
+        <span>STRONG</span><span class="dot">—</span>
+        <span>ELEGANT</span><span class="dot">—</span>
+        <span>PERFORMANCE</span><span class="dot">—</span>
+        <span>NUEVO DROP</span><span class="dot">—</span>
+        <span>ENVÍOS A TODO MÉXICO</span><span class="dot">—</span>
+      </div>
+    </div>
+
+    <!-- Brand statement -->
+    <section class="brand-statement">
+      <blockquote>
+        "No entrenamos para vernos bien.<br>
+        Nos vemos bien porque entrenamos."
+      </blockquote>
+      <cite>— GSTORE</cite>
+    </section>
+
+    <!-- Categorías -->
+    <section class="categories">
+      <div class="section-header">
+        <span>NEW DROP</span>
+        <h2>SHOP BY CATEGORY</h2>
+      </div>
+
+      <div class="grid">
+        <a href="she/she.html" class="card">
+          <img src="images/producto1.jpg" alt="She Collection">
+          <div class="card-info">
+            <span>AVAILABLE NOW</span>
+            <h3>SHE COLLECTION</h3>
+            <p>Activewear femenino</p>
+          </div>
+        </a>
+
+        <a href="#" class="card">
+          <img src="images/producto2.jpg" alt="Mens Drop">
+          <div class="card-info">
+            <span>COMING SOON</span>
+            <h3>MENS DROP</h3>
+            <p>Próximamente</p>
+          </div>
+        </a>
+
+        <a href="#" class="card">
+          <img src="images/producto3.jpg" alt="Accessories">
+          <div class="card-info">
+            <span>COMING SOON</span>
+            <h3>ACCESSORIES</h3>
+            <p>Próximamente</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer">
+      <div class="footer-brand">
+        <div class="footer-logo">GSTORE</div>
+        <p>Performance wear diseñado para quien entrena con intención y se mueve con presencia.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>COLECCIONES</h4>
+        <a href="she/she.html">SHE</a>
+        <a href="#">MENS — SOON</a>
+        <a href="#">ACCESSORIES — SOON</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>INFO</h4>
+        <a href="#">Guía de tallas</a>
+        <a href="#">Envíos y devoluciones</a>
+        <a href="#">Preguntas frecuentes</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>SÍGUENOS</h4>
+        <a href="https://instagram.com/gstorens" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://wa.me/521XXXXXXXXXX" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 GSTORE — TODOS LOS DERECHOS RESERVADOS</p>
+      <p>BUILT FOR DISCIPLINE</p>
+    </div>
+  </footer>
+
+</body>
+</html>

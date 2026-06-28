@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHE Collection | GStore</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        /* ── Toast notificación ── */
+        .toast {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background: #000;
+            color: #fff;
+            padding: 16px 28px;
+            font-size: 11px;
+            letter-spacing: 3px;
+            font-weight: 700;
+            z-index: 999;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Carrito flotante ── */
+        .cart-pill {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            background: #000;
+            color: #fff;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            padding: 20px 10px;
+            font-size: 9px;
+            letter-spacing: 3px;
+            font-weight: 700;
+            text-decoration: none;
+            z-index: 90;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s;
+        }
+
+        .cart-pill:hover {
+            background: #222;
+        }
+
+        .cart-count {
+            background: #fff;
+            color: #000;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 900;
+            writing-mode: horizontal-tb;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            background: #050505;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            padding: 60px 50px 40px;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-brand p {
+            font-size: 12px;
+            color: rgba(255,255,255,0.35);
+            line-height: 1.8;
+            margin-top: 16px;
+            max-width: 220px;
+        }
+
+        .footer-brand .footer-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            letter-spacing: 5px;
+            color: #fff;
+        }
+
+        .footer-col h4 {
+            font-size: 9px;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .footer-col a {
+            display: block;
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover { color: #fff; }
+
+        .footer-bottom {
+            background: #050505;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            font-size: 10px;
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 900px) {
+            .footer {
+                grid-template-columns: 1fr 1fr;
+                padding: 50px 24px 30px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 8px;
+                padding: 20px 24px;
+                text-align: center;
+            }
+
+            .cart-pill { display: none; }
+        }
+
+        @media (max-width: 550px) {
+            .footer { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="top-bar">
+        ENVÍOS A TODO MÉXICO &nbsp;·&nbsp; NUEVO DROP DISPONIBLE
+    </div>
+
+    <header class="navbar">
+        <nav class="nav-left">
+            <a href="../index.html">HOME</a>
+            <a href="#">MENS</a>
+            <a href="she.html">SHE</a>
+            <a href="#">ACCESSORIES</a>
+            <a href="#">STORY</a>
+        </nav>
+
+        <a href="../index.html" class="logo">
+            <img src="../images/logo.png" alt="GStore Logo">
+        </a>
+
+        <div class="nav-right">
+            <a href="../carrito.html" class="nav-cta">CARRITO (<span id="navCartCount">0</span>)</a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <header class="women-header">
+        <div class="women-overlay"></div>
+        <div class="women-content">
+            <span>SHE COLLECTION</span>
+            <h1>BUILT TO MOVE</h1>
+            <p>Activewear diseñado para rendimiento, comodidad y estilo.</p>
+            <a href="#catalogGrid" class="hero-shop-btn">SHOP NOW</a>
+        </div>
+    </header>
+
+    <!-- Carrito flotante -->
+    <a href="../carrito.html" class="cart-pill" aria-label="Ver carrito">
+        <span class="cart-count" id="cartCountPill">0</span>
+        CARRITO
+    </a>
+
+    <!-- Catálogo -->
+    <section class="catalog-section">
+        <div class="catalog-top">
+            <div>
+                <span class="catalog-label">GSTORE WOMEN</span>
+                <h2>ACTIVEWEAR COLLECTION</h2>
+            </div>
+            <p>Entrena. Compite. Evoluciona.</p>
+        </div>
+
+        <div class="catalog-grid" id="catalogGrid"></div>
+    </section>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">✓ &nbsp;AGREGADO AL CARRITO</div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer">
+            <div class="footer-brand">
+                <div class="footer-logo">GSTORE</div>
+                <p>Performance wear diseñado para quien entrena con intención y se mueve con presencia.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>COLECCIONES</h4>
+                <a href="she.html">SHE</a>
+                <a href="#">MENS — SOON</a>
+                <a href="#">ACCESSORIES — SOON</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>INFO</h4>
+                <a href="#">Guía de tallas</a>
+                <a href="#">Envíos y devoluciones</a>
+                <a href="#">Preguntas frecuentes</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>SÍGUENOS</h4>
+                <a href="https://instagram.com/gstorens" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://wa.me/521XXXXXXXXXX" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025 GSTORE — TODOS LOS DERECHOS RESERVADOS</p>
+            <p>BUILT FOR DISCIPLINE</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+    <script>
+        /* ── Contador de carrito ── */
+        function actualizarContador() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const count = cart.length;
+            document.getElementById("navCartCount").textContent = count;
+            document.getElementById("cartCountPill").textContent = count;
+        }
+
+        actualizarContador();
+
+        /* ── Toast ── */
+        function mostrarToast() {
+            const toast = document.getElementById("toast");
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 2200);
+        }
+
+        /* ── Cargar catálogo desde Excel ── */
+        async function cargarCatalogo() {
+            const response = await fetch("./InventarioShe.xlsx");
+            const arrayBuffer = await response.arrayBuffer();
+
+            const workbook = XLSX.read(arrayBuffer, { type: "array" });
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+            const productos = XLSX.utils.sheet_to_json(sheet);
+
+            const catalogGrid = document.getElementById("catalogGrid");
+            catalogGrid.innerHTML = "";
+
+            productos.forEach(producto => {
+                const numero = producto["#Número"];
+                const nombre = producto["Nombre"] || "";
+                const talla  = producto["Talla"]   || "";
+                const precio = producto["Precio"]  || "";
+                const color  = producto["Color"]   || "";
+                const marca  = producto["Marca"]   || "";
+
+                const img1 = `../images/she/${numero}.1.png`;
+                const img2 = `../images/she/${numero}.2.png`;
+                const img3 = `../images/she/${numero}.3.png`;
+
+                const item = document.createElement("div");
+                item.className = "catalog-item";
+                item.innerHTML = `
+                    <div class="product-gallery">
+                        <img
+                            src="${img1}"
+                            alt="${nombre}"
+                            class="main-image"
+                            onmouseover="this.src='${img2}'"
+                            onmouseout="this.src='${img1}'"
+                        >
+                        <div class="thumbs">
+                            <img src="${img1}" onclick="event.stopPropagation(); this.closest('.product-gallery').querySelector('.main-image').src=this.src">
+                            <img src="${img2}" onclick="event.stopPropagation(); this.closest('.product-gallery').querySelector('.main-image').src=this.src">
+                            <img src="${img3}" onclick="event.stopPropagation(); this.closest('.product-gallery').querySelector('.main-image').src=this.src">
+                        </div>
+                    </div>
+
+                    <div class="catalog-info">
+                        <span class="catalog-brand">${marca}</span>
+                        <h3>${nombre}</h3>
+                        <p class="catalog-color">${color} · ${talla}</p>
+                        <p class="catalog-price">$${precio} MXN</p>
+                        <p class="catalog-stock">DISPONIBLE</p>
+                        <button
+                            class="catalog-btn add-to-cart"
+                            data-id="${numero}"
+                            data-name="${nombre}"
+                            data-price="${precio}"
+                            data-color="${color}"
+                            data-size="${talla}"
+                            data-brand="${marca}"
+                            data-image="${img1}"
+                        >
+                            AGREGAR AL CARRITO
+                        </button>
+                    </div>
+                `;
+
+                /* Click en la card → página de producto */
+                item.addEventListener("click", function(e) {
+                    if (!e.target.closest(".add-to-cart") && !e.target.closest(".thumbs")) {
+                        window.location.href = `producto.html?id=${numero}`;
+                    }
+                });
+
+                catalogGrid.appendChild(item);
+            });
+        }
+
+        cargarCatalogo();
+
+        /* ── Agregar al carrito ── */
+        document.addEventListener("click", function(e) {
+            const btn = e.target.closest(".add-to-cart");
+            if (!btn) return;
+
+            e.stopPropagation();
+
+            const product = {
+                id:    btn.dataset.id,
+                name:  btn.dataset.name,
+                price: btn.dataset.price,
+                color: btn.dataset.color,
+                size:  btn.dataset.size,
+                brand: btn.dataset.brand,
+                image: btn.dataset.image
+            };
+
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.push(product);
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            actualizarContador();
+            mostrarToast();
+        });
+    </script>
+
+</body>
+</html>
